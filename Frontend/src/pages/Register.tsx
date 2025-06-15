@@ -20,7 +20,7 @@ const Register = () => {
     isActive: true,
   };
 
-  const handleSubmit = async (values: SignupForm) => {
+  const handleSignup = async (values: SignupForm) => {
     // console.log(values);
     try {
       await toast.promise(
@@ -56,7 +56,7 @@ const Register = () => {
         validateOnChange={false}
         onSubmit={(values, actions) => {
           // console.log({ values });
-          handleSubmit(values);
+          handleSignup(values);
           actions.setSubmitting(false);
         }}
       >
@@ -67,7 +67,7 @@ const Register = () => {
               id="fullName"
               name="fullName"
               type="text"
-              placeholder="John Doe"
+              placeholder="Enter your name"
               className="w-full px-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
             />
           </div>

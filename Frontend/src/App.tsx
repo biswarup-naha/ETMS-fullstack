@@ -11,7 +11,7 @@ function App() {
     <Toaster reverseOrder={true} />
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/admin-dashboard" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />

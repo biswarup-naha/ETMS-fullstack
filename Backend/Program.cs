@@ -77,14 +77,14 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Todo API",
+        Title = "ETS Backend API",
         Version = "v1",
-        Description = "A simple ASP.NET Core Web API for managing Todos",
+        Description = "A simple ASP.NET Core Web API for ETS",
         Contact = new OpenApiContact
         {
-            Name = "Dipa Ghosh",
-            Email = "dipaghosh0902@gmail.com",
-            Url = new Uri("https://www.github.com/dipa-ghosh11")
+            Name = "Biswarup Naha",
+            Email = "biswarupnaha@coding-junction.in",
+            Url = new Uri("https://www.github.com/biswarup-naha")
         }
     });
 });
