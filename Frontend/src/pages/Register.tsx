@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { useEffect, useState } from "react";
+import { login } from "../features/auth/authSlice";
 
-interface SignupForm {
+interface SignUpForm {
   fullName: string;
   email: string;
   password: string;
@@ -12,7 +15,7 @@ interface SignupForm {
 }
 
 const Register = () => {
-  const initialValues: SignupForm = {
+  const initialValues: SignUpForm = {
     fullName: "",
     email: "",
     password: "",
@@ -20,33 +23,45 @@ const Register = () => {
     isActive: true,
   };
 
-  const handleSignup = async (values: SignupForm) => {
-    // console.log(values);
-    try {
-      await toast.promise(
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            axios
-              .post(`${import.meta.env.VITE_API_URL}/api/user/register`, values)
-              .then(resolve)
-              .catch(reject);
-          }, 3000);
-        }),
-        {
-          loading: "Registering...",
-          success: "Registered successfully!",
-          error: "Error registering!",
-        },
-        {
-          success: {
-            duration: 5000,
-          },
+  const [loading, setLoading] = useState(false);
+  const {user}=useAppSelector((state)=>state.auth)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSignup = async (values: SignUpForm) => {
+    setLoading(true);
+
+    const promise = new Promise(async (resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          const res = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/user/register`,
+            values
+          );
+
+          dispatch(login({ user: res.data.data, token: res.data.token }));
+
+          resolve('Signed up');
+        } catch (err: any) {
+          reject(err.response?.data?.message || 'Signup failed!');
+        } finally {
+          setLoading(false);
         }
-      );
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-    }
+      }, 2000);
+    });
+
+    await toast.promise(promise, {
+      loading: 'Signing up...',
+      success: 'Account created!',
+      error: (err) => err,
+    });
   };
+
+  useEffect(() => {
+    if(user?.role==='admin') navigate('/admin-dashboard');
+    else if (user?.role === 'user') navigate('/user-dashboard');
+    else navigate('/login');
+  }, [user, navigate]);
 
   return (
     <div className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -106,9 +121,10 @@ const Register = () => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="w-full py-2 bg-gray-800 text-white rounded-md shadow hover:bg-gray-700 transition"
           >
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </Form>
       </Formik>
