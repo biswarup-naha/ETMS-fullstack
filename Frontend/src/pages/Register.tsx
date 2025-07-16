@@ -53,14 +53,13 @@ const Register = () => {
     await toast.promise(promise, {
       loading: 'Signing up...',
       success: 'Account created!',
-      error: (err) => err,
+      error: (err) => err, 
     });
   };
 
   useEffect(() => {
     if(user?.role==='admin') navigate('/admin-dashboard');
     else if (user?.role === 'user') navigate('/user-dashboard');
-    else navigate('/login');
   }, [user, navigate]);
 
   return (
