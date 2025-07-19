@@ -40,6 +40,8 @@ namespace Backend.Controllers
         // }
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]        
         public async Task<ActionResult<PaginatedResponse<TaskItem>>> GetFilteredPaginated(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
@@ -76,7 +78,10 @@ namespace Backend.Controllers
         }
 
 
+        [Authorize]
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TaskItem>> GetById(string id)
         {
             try
@@ -99,7 +104,10 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TaskItem>> Add(TaskItem TaskItem)
         {
             try
@@ -123,7 +131,10 @@ namespace Backend.Controllers
 
         }
 
+        [Authorize]
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Update(string id, TaskItem TaskItem)
         {
             try
@@ -146,7 +157,10 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete(string id)
         {
             try
