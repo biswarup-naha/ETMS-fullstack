@@ -15,7 +15,49 @@ public class UserService
         _users = database.GetCollection<User>(settings.UserCollectionName);
     }
 
-    public async Task<List<User>> GetAll() => await _users.Find(user => true).ToListAsync();
+    // public async Task<List<User>> GetAll() => await _users.Find(user => true).ToListAsync();
+
+    public async Task<List<User>> GetAll(int page = 1, int pageSize = 10, string? search = null, string? role = null)
+    {
+        var filterBuilder = Builders<User>.Filter;
+        var filter = filterBuilder.Empty;
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            var searchFilter = filterBuilder.Or(
+                filterBuilder.Regex(u => u.FullName, new MongoDB.Bson.BsonRegularExpression(search, "i")),
+                filterBuilder.Regex(u => u.Email, new MongoDB.Bson.BsonRegularExpression(search, "i"))
+            );
+            filter &= searchFilter;
+        }
+
+        // if (!string.IsNullOrEmpty(role))
+        // {
+        //     filter &= filterBuilder.Eq(u => u.Role, role);
+        // }
+
+        return await _users.Find(filter)
+            .Skip((page - 1) * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<long> GetTotal(int page = 1, int pageSize = 10, string? search = null, string? role = null)
+    {
+        var filterBuilder = Builders<User>.Filter;
+        var filter = filterBuilder.Empty;
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            var searchFilter = filterBuilder.Or(
+                filterBuilder.Regex(u => u.FullName, new MongoDB.Bson.BsonRegularExpression(search, "i")),
+                filterBuilder.Regex(u => u.Email, new MongoDB.Bson.BsonRegularExpression(search, "i"))
+            );
+            filter &= searchFilter;
+        }
+
+        return await _users.CountDocumentsAsync(filter);
+    }
 
     public async Task<User> GetById(string id) => await _users.Find(user => user.Id == id).FirstOrDefaultAsync();
 

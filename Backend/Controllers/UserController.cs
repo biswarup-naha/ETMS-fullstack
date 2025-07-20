@@ -115,16 +115,24 @@ namespace Backend.Controllers
 
         [Authorize(Roles ="admin")]
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null
+        )
         {
             try
             {
-                var users = await _userService.GetAll();
-                return Ok(new ApiResponse<List<User>>
+                var users = await _userService.GetAll(page, pageSize, search);
+                var totalCount = await _userService.GetTotal(page, pageSize, search);
+                return Ok(new PaginatedResponse<User>
                 {
                     Success = true,
                     Message = "Users fetched",
-                    Data = users
+                    Data = users,
+                    CurrentPage = page,
+                    PageSize = pageSize,
+                    TotalCount = totalCount
                 });
             }
             catch (System.Exception)
