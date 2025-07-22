@@ -1539,24 +1539,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Biswarup Naha\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Biswarup Naha\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PrOgramming\\CAPSITECH\\Task-7\\Backend\\Backend.csproj",
+      "projectUniqueName": "D:\\PrOgramming\\CAPSITECH\\Task-6\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "D:\\PrOgramming\\CAPSITECH\\Task-7\\Backend\\Backend.csproj",
+      "projectPath": "D:\\PrOgramming\\CAPSITECH\\Task-6\\Backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\Biswarup Naha\\.nuget\\packages\\",
-      "outputPath": "D:\\PrOgramming\\CAPSITECH\\Task-7\\Backend\\obj\\",
+      "outputPath": "D:\\PrOgramming\\CAPSITECH\\Task-6\\Backend\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\Biswarup Naha\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
